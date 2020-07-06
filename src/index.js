@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import ReactDOM from 'react-dom';
+import Counter from './hook-counter';
 
 const MyContext = React.createContext();
 
@@ -37,6 +38,10 @@ const App = () => (
     <main>
       <Panel />
       <HookSwitcher />
+
+      <aside style={{border: '1px solid black', marginTop: '40px'}}>
+        <Counter />
+      </aside>
     </main>
   </MyContext.Provider>
 );
