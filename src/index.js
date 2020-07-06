@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import Counter from './hook-counter';
+import PlanetInfo from './planet-info';
 
 const MyContext = React.createContext();
 
@@ -52,6 +53,10 @@ const App = () => (
 
       <aside style={{border: '1px solid black', marginTop: '40px'}}>
         <Counter />
+      </aside>
+
+      <aside style={{border: '1px solid blue', marginTop: '40px'}}>
+        <PlanetInfo />
       </aside>
     </main>
   </MyContext.Provider>
