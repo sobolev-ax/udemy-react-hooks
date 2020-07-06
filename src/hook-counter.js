@@ -3,10 +3,16 @@ import React, { Component, useState, useEffect } from 'react';
 const HookCounter = ({ value }) => {
 
   useEffect(() => {
-    console.log('HookCounter, useEffect: useEffect');
+    console.log('HookCounter, useEffect: mount');
+  }, [])
 
-    return () => console.log('HookCounter, useEffect: clear');
+  useEffect(() => {
+    console.log('HookCounter, useEffect: update');
   }, [ value ])
+
+  useEffect(() => {
+    return () => console.log('HookCounter, useEffect: unmount');
+  }, [ ])
 
   return (
     <p>{ value }</p>

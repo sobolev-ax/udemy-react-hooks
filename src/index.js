@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import Counter from './hook-counter';
 
@@ -6,12 +6,23 @@ const MyContext = React.createContext();
 
 const Panel = () => {
   const name = useContext(MyContext);
+  const [visible, setVisible ] = useState(true);
 
-  return (
-    <section style={{textAlign: 'right', color: 'tomato'}}>
-      Hello, { name }
-    </section>
-  )
+  useEffect(() => {
+    const timerId = setTimeout(() => setVisible(false), 2000);
+
+    return () => clearTimeout(timerId);
+  }, []);
+
+  if (visible) {
+    return (
+      <section style={{color: 'tomato', position: 'absolute', right: 0}}>
+        <h2>Hello, { name }</h2>
+      </section>
+    )
+  }
+
+  return "";
 }
 
 const HookSwitcher = () => {
