@@ -1,5 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import ReactDOM from 'react-dom';
+
+const MyContext = React.createContext();
+
+const Panel = () => {
+  const name = useContext(MyContext);
+
+  return (
+    <section style={{textAlign: 'right', color: 'tomato'}}>
+      Hello, { name }
+    </section>
+  )
+}
 
 const HookSwitcher = () => {
   const [font, setFont] = useState({
@@ -21,9 +33,12 @@ const HookSwitcher = () => {
 }
 
 const App = () => (
-  <main>
-    <HookSwitcher />
-  </main>
+  <MyContext.Provider value="sobolev.ax">
+    <main>
+      <Panel />
+      <HookSwitcher />
+    </main>
+  </MyContext.Provider>
 );
 
 ReactDOM.render(<App />, document.getElementById('root'));
