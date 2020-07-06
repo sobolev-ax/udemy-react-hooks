@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-export default () => {
-  const [ planet, setPlanet ] = useState({ id: 3, name: ""});
+const usePlanetInfo = (id) => {
+  const [ planet, setPlanet ] = useState({ id, name: ""});
 
   useEffect(() => {
     console.log('PlanetInfo, useEffect: update')
@@ -15,6 +15,14 @@ export default () => {
     return () => cancelled = true;
   }, [planet.id])
 
+  const setId = (id) => setPlanet((planet) => ({...planet, id: id > 0 ? id : 1}))
+
+  return [planet, setId];
+}
+
+export default () => {
+  const [ planet, setId ] = usePlanetInfo(3);
+
   return (
     <section style={{border: "1px solid black"}}>
       <h3>Planet Info</h3>
@@ -27,8 +35,8 @@ export default () => {
         </li>
       </ul>
 
-      <button onClick={() => setPlanet((planet) => ({...planet, id: planet.id - 1 ? planet.id - 1 : 1 }))}>Prev</button>
-      <button onClick={() => setPlanet((planet) => ({...planet, id: planet.id + 1 }))}>Next</button>
+      <button onClick={() => setId(planet.id - 1)}>Prev</button>
+      <button onClick={() => setId(planet.id + 1)}>Next</button>
     </section>
   )
 }
