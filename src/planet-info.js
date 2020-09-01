@@ -1,42 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const usePlanetInfo = (id) => {
-  const [ planet, setPlanet ] = useState({ id, name: ""});
-
-  useEffect(() => {
-    console.log('PlanetInfo, useEffect: update')
-
-    let cancelled = false;
-
-    fetch('https://swapi.dev/api/planets/' + planet.id)
-      .then(res => res.json())
-      .then(({ name }) => !cancelled && setPlanet((planet) => ({...planet, name})));
-
-    return () => cancelled = true;
-  }, [planet.id])
-
-  const setId = (id) => setPlanet((planet) => ({...planet, id: id > 0 ? id : 1}))
-
-  return [planet, setId];
+const getPlanet = (id) => {
+  return fetch('https://swapi.dev/api/planets/' + id)
+  .then(res => res.json());
 }
 
-export default () => {
-  const [ planet, setId ] = usePlanetInfo(3);
+const usePlanetData = (id) => {
+  const [data, setData] = useState({});
+
+  useEffect(() => {
+    let cancelled = false;
+
+    getPlanet(id).then((data) => !cancelled && setData(data));
+
+    return () => cancelled = true;
+  }, [id]);
+
+  return data;
+}
+
+export default ({ id }) => {
+  const data = usePlanetData(id);
 
   return (
-    <section style={{border: "1px solid black"}}>
+    <section>
       <h3>Planet Info</h3>
       <ul>
         <li>
-          id: { planet.id }
+          id: { id }
         </li>
         <li>
-          name: { planet.name } 
+          name: { data.name } 
         </li>
       </ul>
-
-      <button onClick={() => setId(planet.id - 1)}>Prev</button>
-      <button onClick={() => setId(planet.id + 1)}>Next</button>
     </section>
   )
 }

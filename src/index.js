@@ -45,21 +45,27 @@ const HookSwitcher = () => {
   );
 }
 
-const App = () => (
-  <MyContext.Provider value="sobolev.ax">
-    <main>
-      <Panel />
-      <HookSwitcher />
+const App = () => {
+  const [planetId, setPlanetId] = useState(4);
 
-      <aside style={{border: '1px solid black', marginTop: '40px'}}>
-        <Counter />
-      </aside>
+  return (
+    <MyContext.Provider value="sobolev.ax">
+      <main>
+        <Panel />
+        <HookSwitcher />
 
-      <aside style={{border: '1px solid blue', marginTop: '40px'}}>
-        <PlanetInfo />
-      </aside>
-    </main>
-  </MyContext.Provider>
-);
+        <aside style={{border: '1px solid black', marginTop: '40px'}}>
+          <Counter />
+        </aside>
+
+        <aside style={{border: '1px solid blue', marginTop: '40px'}}>
+          <PlanetInfo id={planetId} />
+          <button onClick={() => setPlanetId((s) => s + 1)}>+</button>
+          <button onClick={() => setPlanetId((s) => s - 1)}>-</button>
+        </aside>
+      </main>
+    </MyContext.Provider>
+  );
+}
 
 ReactDOM.render(<App />, document.getElementById('root'));
